@@ -2,6 +2,8 @@
 
 A front-end app (SPA) for viewing and managing socialistic automobile listings. The application allows visitors to browse through different automobile listings. Users may register with a username and password, which allows them to create their own listings. Listing authors can also edit or delete their own publications at any time.
 
+The web application can be reached at https://socauto.github.io/ .
+
 ## Functionality
 * Authentication of users (registration and login)
 * All users (both authenticated and unauthenticated) can view the catalog page with the automobile listings posted by other users
