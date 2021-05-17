@@ -23,14 +23,16 @@ function addOwner(object) {
 }
 
 //Application-specific requests
-// needs fix to show cars in desc order
-//get all ads
+
+//get all listings
 export async function getAllListings() {
     const response = await api.get(host + `/classes/Automobile`);
     const result = response.results
-    return result.sort(function(a, b){return b.createdAt - a.createdAt});
+    const sorted_result = result.sort(function(a, b){ return b.createdAt.localeCompare(a.createdAt) });
+    return sorted_result;
 }
 
+//needs fix
 //for pagination
 export async function getCollectionSize() {
     const response = await api.get(host + '/classes/Automobile?count=1');
