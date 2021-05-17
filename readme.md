@@ -47,7 +47,7 @@ A front-end app (SPA) for viewing and managing socialistic automobile listings. 
     brand: String,
     model: String,
     description: String,
-    year: String,
+    year: Number,
     imageUrl: String,
     country: String,
 }

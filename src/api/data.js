@@ -1,49 +1,70 @@
+import { getUserData } from '../utility.js';
 import * as api from './api.js';
 
-const host = 'http://localhost:3030';
+const host = 'https://parseapi.back4app.com';
 api.settings.host = host;
 
 export const login = api.login;
 export const register = api.register;
 export const logout = api.logout;
 
-//Application-specific requests
+function createPointer(name, id) {
+    return {
+        __type: 'Pointer', 
+        className: name,
+        objectId: id 
+        }
+}
 
+function addOwner(object) {
+    const userId = getUserData().objectId;
+    object.owner = createPointer('_User', userId);
+    
+}
+
+//Application-specific requests
+// needs fix to show cars in desc order
 //get all ads
-export async function getAllListings(page = 1) {
-    return await api.get(host + `/data/cars?sortBy=_createdOn%20desc&offset=${(page - 1) * 6}&pageSize=6`);
+export async function getAllListings() {
+    const response = await api.get(host + `/classes/Automobile`);
+    const result = response.results
+    return result.sort(function(a, b){return b.createdAt - a.createdAt});
 }
 
 //for pagination
 export async function getCollectionSize() {
-    return await api.get(host + '/data/cars?count');
+    const response = await api.get(host + '/classes/Automobile?count=1');
+    return response.count;
 }
 
-//get ad by id
+//get listing by id
 export async function getListingById(id) {
-    return await api.get(host + '/data/cars/' + id);
+    return await api.get(host + '/classes/Automobile/' + id + '?include=owner');
 }
 
-//create ad
+//create listing
 export async function createListing(listing) {
-    return await api.post(host + '/data/cars/', listing);
+    const userId = getUserData().objectId;
+    addOwner(listing);
+    return await api.post(host + '/classes/Automobile', listing);
 }
 
-//edit ad by id
+//edit listing by id
 export async function updateListing(id, listing) {
-    return await api.put(host + '/data/cars/' + id, listing);
+    return await api.put(host + '/classes/Automobile/' + id, listing);
 }
 
-//delete ad by id
+//delete listing by id
 export async function deleteListing(id) {
-    return await api.del(host + '/data/cars/' + id);
+    return await api.del(host + '/classes/Automobile/' + id);
 }
-
-//get my ads
+// needs fix
+//get my listings
 export async function getMyListings(userId) {
-    return await api.get(host + `/data/cars?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`);
+    const query = JSON.stringify({owner: createPointer('Automobile', userId)});
+    return await api.get(host + '/classes/Automobile?where=' + encodeURIComponent(query));
 }
-
+// needs fix
 export async function search(query) {
-    return await api.get(host + `/data/cars?where=year%3D${query}`)
+    return await api.get(host + '/classes/Automobile?where=' + encodeURIComponent(query))
 }

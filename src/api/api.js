@@ -33,12 +33,15 @@ async function request(url, options) {
 function createOptions(method = 'get', body) {
     const options = {
         method,
-        headers: {}
+        headers: {
+            'X-Parse-Application-Id': '6H3iTk0euavDwf60foOsTImMVczZPRVdLlDDyxPI',
+            'X-Parse-REST-API-Key': 'jhtq0fFqz3ghVVgQLhLf0uPMcVUALCOmoZwLk3WU'
+        }
     };
 
     const user = getUserData();
         if (user) {
-            options.headers['X-Authorization'] = user.accessToken;
+            options.headers['X-Parse-Session-Token'] = user.sessionToken;
         }
         if (body) {
             options.headers['Content-Type'] = 'application/json';
@@ -68,19 +71,19 @@ export async function del(url) {
 
 // authentication function (login/register/logout)
 export async function login(username, password) {
-    const result = await post(settings.host + '/users/login', { username, password });
+    const result = await post(settings.host + '/login', { username, password });
     setUserData(result);
     return result;
 }
 
-export async function register(username, password) {
-    const result = await post(settings.host + '/users/register', { username, password });
+export async function register(email, username, password) {
+    const result = await post(settings.host + '/users', { email, username, password });
     setUserData(result);
     return result;
 }
 
 export function logout() {
-    const result = get(settings.host + '/users/logout');
+    const result = post(settings.host + '/logout', {});
     clearUserData();
     return result;
 }

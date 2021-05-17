@@ -1,0 +1,28 @@
+{
+  "name": "SocAuto",
+  "version": "1.0.0",
+  "description": "A front-end app (SPA) for viewing and managing socialistic automobile listings. The application allows visitors to browse through different automobile listings. Users may register with a username and password, which allows them to create their own listings. Listing authors can also edit or delete their own publications at any time.",
+  "main": "index.html",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "lit-html": "1.4.1",
+    "page": "1.11.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SocAuto/SocAuto.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SocAuto/SocAuto.github.io/issues"
+  },
+  "homepage": "https://github.com/SocAuto/SocAuto.github.io#readme"
+}

@@ -28,7 +28,7 @@ const detailsTemplate = (car, isOwner, onDelete) => html`
 export async function detailsPage(ctx) {
     const carId = ctx.params.id;
     const car = await getListingById(carId);
-    const isOwner = ctx.user && car._ownerId == ctx.user._id;
+    const isOwner = ctx.user && car._ownerId == ctx.user.objectId;
     ctx.render(detailsTemplate(car, isOwner, onDelete));
 
     async function onDelete() {

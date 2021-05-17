@@ -12,7 +12,7 @@ export const carTemplate = (car) => html`
             <h3>Country: ${car.country}</h3>
         </div>
         <div class="data-buttons">
-            <a href="/details/${car._id}" class="button-carDetails">Details</a>
+            <a href="/details/${car.objectId}" class="button-carDetails">Details</a>
         </div>
     </div>
 </div>`;

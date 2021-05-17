@@ -12,6 +12,9 @@ import { homePage } from './views/home.js';
 import { profilePage } from './views/profile.js';
 import { searchPage } from './views/search.js';
 
+import * as api from './api/data.js';
+window.api = api;
+
 const main = document.getElementById('site-content');
 document.getElementById('logoutBtn').addEventListener('click', logout);
 

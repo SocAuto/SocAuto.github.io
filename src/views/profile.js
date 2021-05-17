@@ -14,6 +14,6 @@ const profileTemplate = (cars) => html`
 </section>`;
 
 export async function profilePage(ctx) {
-    const cars = await getMyListings(ctx.user._id);
+    const cars = await getMyListings(ctx.user.objectId);
     ctx.render(profileTemplate(cars));
 }
