@@ -1,4 +1,4 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+import { html } from '../lib.js';
 
 import { login, register } from '../api/data.js';
 

@@ -1,5 +1,4 @@
-import { render } from '../node_modules/lit-html/lit-html.js';
-import page from '../node_modules/page/page.mjs';
+import {page, render } from './lib.js';
 
 import { logout as apiLogout } from './api/data.js';
 import { getUserData } from './utility.js';

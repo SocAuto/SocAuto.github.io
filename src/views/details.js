@@ -1,4 +1,4 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+import { html } from '../lib.js';
 
 import { deleteListing, getListingById } from '../api/data.js';
 
@@ -18,7 +18,7 @@ const detailsTemplate = (car, isOwner, onDelete) => html`
         <p class="description-para">${car.description}</p>
 
         ${isOwner ? html`<div class="listings-buttons">
-            <a href="/edit/${car._id}" class="button-list">Edit</a>
+            <a href="/edit/${car.objectId}" class="button-list">Edit</a>
             <a @click=${onDelete} href="javascript:void(0)" class="button-list">Delete</a>
         </div>` : ''}
 
@@ -28,7 +28,7 @@ const detailsTemplate = (car, isOwner, onDelete) => html`
 export async function detailsPage(ctx) {
     const carId = ctx.params.id;
     const car = await getListingById(carId);
-    const isOwner = ctx.user && car._ownerId == ctx.user.objectId;
+    const isOwner = ctx.user && car.owner.objectId == ctx.user.objectId;
     ctx.render(detailsTemplate(car, isOwner, onDelete));
 
     async function onDelete() {
