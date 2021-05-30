@@ -28,7 +28,9 @@ const catalogTemplate = (cars, page, pages) => html`
 export async function catalogPage(ctx) {
     const page = Number(ctx.querystring.split('=')[1]) || 1;
     const count = await getCollectionSize();
-    const pages = Math.ceil(count / 6);
-    const cars = await getAllListings(page);
+    const itemsPerPage = 3
+    const pages = Math.ceil(count / itemsPerPage);
+    const toSkip = (page * itemsPerPage) - itemsPerPage;
+    const cars = await getAllListings(toSkip, itemsPerPage);
     ctx.render(catalogTemplate(cars, page, pages));
 }

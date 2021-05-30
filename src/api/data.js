@@ -25,14 +25,15 @@ function addOwner(object) {
 //Application-specific requests
 
 //get all listings
-export async function getAllListings() {
+export async function getAllListings(startIndex, itemsPerPage) {
+    // ?order=createdAt&skip=${page}&limit=6
     const response = await api.get(host + `/classes/Automobile`);
-    const result = response.results
-    const sorted_result = result.sort(function(a, b){ return b.createdAt.localeCompare(a.createdAt) });
-    return sorted_result;
+    const results = response.results
+    const sortedResult = results.sort(function(a, b){ return b.createdAt.localeCompare(a.createdAt) });
+    const toReturn = sortedResult.slice(startIndex, startIndex + itemsPerPage);
+    return toReturn;
 }
 
-//needs fix
 //for pagination
 export async function getCollectionSize() {
     const response = await api.get(host + '/classes/Automobile?count=1');
@@ -60,13 +61,15 @@ export async function updateListing(id, listing) {
 export async function deleteListing(id) {
     return await api.del(host + '/classes/Automobile/' + id);
 }
-// needs fix
+
 //get my listings
 export async function getMyListings(userId) {
-    const query = JSON.stringify({owner: createPointer('Automobile', userId)});
-    return await api.get(host + '/classes/Automobile?where=' + encodeURIComponent(query));
+    const query = JSON.stringify({owner: createPointer('_User', userId)});
+    const result = await api.get(host + '/classes/Automobile?where=' + query);
+    return result.results;
 }
-// needs fix
+
 export async function search(query) {
-    return await api.get(host + '/classes/Automobile?where=' + encodeURIComponent(query))
+    const result = await api.get(host + '/classes/Automobile?where=' + `{"year":${query}}`);
+    return result.results;
 }
