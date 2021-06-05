@@ -47,6 +47,7 @@ h3 {
 
 .button-carDetails {
     background-color: #e41616;
+    border-radius: 10px;
     border: none;
     color: white;
     padding: 10px;
